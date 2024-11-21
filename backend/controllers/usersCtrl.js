@@ -146,3 +146,21 @@ export const userLogout = asyncHandler(async (req, res) => {
 //! @route GET /api/user/me
 //! @access Private
 //? -------------------------------
+
+export const getUser = asyncHandler(async (req, res) => {
+  const id = req.user.id;
+
+  const user = await User.findById(id).select("-password");
+
+  // ! if user does not exist
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  res.json({
+    status: "success",
+    message: "User retrieved successfully",
+    user,
+  });
+});

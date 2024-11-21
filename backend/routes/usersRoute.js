@@ -3,7 +3,10 @@ import {
   userRegistration,
   userLogin,
   userLogout,
+  getUser,
 } from "../controllers/usersCtrl.js";
+
+import isAuthenticated from "../middlewares/isAuthenticated.js";
 
 const userRouter = express.Router();
 
@@ -14,5 +17,7 @@ const userRouter = express.Router();
 userRouter.post("/register", userRegistration);
 userRouter.post("/login", userLogin);
 userRouter.post("/logout", userLogout);
+userRouter.get("/profile", isAuthenticated, getUser);
+
 
 export default userRouter;
