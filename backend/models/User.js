@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema(
     },
     subscription: {
       type: String,
-      // default: "Free",
+      default: "Trial",
       enum: ["Trial", "Free", "Basic", "Standard", "Premium"],
     },
     apiRequestCount: {
@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 100, // TODO 100 requests per month // 3 days trial
     },
-    
+
     nextBillingDate: {
       type: Date,
     },
@@ -66,18 +66,19 @@ const userSchema = new mongoose.Schema(
   {
     timestamps: true,
     toJSON: { virtuals: true },
-    toObject: { virtuals: true }, 
+    toObject: { virtuals: true },
   }
 );
 
 //! Add the virtual property
 userSchema.virtual("isTrialActive").get(function () {
-  return this.trialActive && new Date() < this.trialExpire;
+  let isTrialActive = this.trialActive && new Date() < this.trialExpire;
+  console.log("trialExpire", this.trialExpire);
+  console.log("isTrialActive", isTrialActive);
+  return isTrialActive;
 });
 
-
-//? Compile to create model 
+//? Compile to create model
 const User = mongoose.model("User", userSchema);
 
 export default User;
-

@@ -106,12 +106,17 @@ export const userLogin = asyncHandler(async (req, res) => {
     maxAge: 3 * 24 * 60 * 60 * 1000,
   });
 
+  // ! Add the date the trial will end
+
   if (user.trialActive) {
     user.trialExpire = new Date(
       new Date().getTime() + user.trialPeriod * 24 * 60 * 60 * 1000
     );
     0;
   }
+
+  // console.log(user.trialExpire);
+  // ! Send response
 
   res.json({
     status: "success",
