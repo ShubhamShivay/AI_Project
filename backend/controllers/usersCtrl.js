@@ -48,7 +48,7 @@ export const userRegistration = asyncHandler(async (req, res) => {
   });
   // ! Add the date the trial will end
   user.trialExpire = new Date(
-    new Date().getTime() + user.trialPeriod * 24 * 60 * 60 * 1000
+    new Date().getTime() + user.trialPeriod * 24 * 60 * 60 * 1000 * 3 // 3 days
   );
 
   res.json({
@@ -110,7 +110,7 @@ export const userLogin = asyncHandler(async (req, res) => {
 
   if (user.trialActive) {
     user.trialExpire = new Date(
-      new Date().getTime() + user.trialPeriod * 24 * 60 * 60 * 1000
+      new Date().getTime() + user.trialPeriod * 24 * 60 * 60 * 1000 * 3 // 3 days
     );
     0;
   }
